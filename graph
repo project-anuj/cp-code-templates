@@ -186,3 +186,69 @@ void bfs(int src)
         }
     }
 }
+
+//////////////////////////////////////////////////////////////////finding Bridges /////////////////////////////////////////////////////////////////////
+
+vector<int> ar[10001];
+int In[10001],low[10001],visited[10001];
+int timer;
+
+void dfs(int node,int par)
+{
+	visited[node]=1;
+	In[node]=low[node]=timer;
+	timer++;
+	
+	for(auto child : ar[node])
+	{
+		if(child==par)
+		continue;
+		if(visited[child]==1)
+		{	// edge node-child is a back edge
+			low[node]=min(low[node],In[child]);
+		}
+		else
+		{	// edge node-child is a forward edge
+			dfs(child,node);
+	
+			if(low[child]>In[node])
+			cout<<node<<" - "<<child<<" is a bridge"<<endl;
+			low[node] = min(low[node],low[child]);
+		}
+	}
+}
+int main()
+{
+	dfs(1,-1);
+}
+
+//////////////////////////////////////////////////////////Articulation points (cut vertex)/////////////////////////////////////////////////////////////
+
+vector<vector<int>> adj; // adjacency list of graph
+
+vector<bool> visited;
+vector<int> tin, low;
+int timer;
+
+void dfs(int v, int p = -1) {
+    visited[v] = true;
+    tin[v] = low[v] = timer++;
+    int children=0;
+    for (int to : adj[v]) {
+        if (to == p) continue;
+        if (visited[to]) {
+            low[v] = min(low[v], tin[to]);
+        } else {
+            dfs(to, v);
+            low[v] = min(low[v], low[to]);
+            if (low[to] >= tin[v] && p!=-1)
+                IS_CUTPOINT(v);
+            ++children;
+        }
+    }
+    if(p == -1 && children > 1)
+        IS_CUTPOINT(v);
+}
+
+////////////////////////////////////////////////////////////TOPOLOGICAL SORT/////////////////////////////////////////////////////////////////////////
+
