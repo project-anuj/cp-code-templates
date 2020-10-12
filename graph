@@ -1,0 +1,188 @@
+//////////////////////////////////////////////////////////////// DFS //////////////////////////////////////////////////////////////////////
+
+//...................................print dfs..................................
+vector<int> ar[100001];
+int visited[100001];
+void dfs(int node)
+{
+    visited[node]=1;
+    cout<<node<<" " ;
+    for(auto child : ar[node])
+    {
+        if(visited[child]==0)
+        {
+          dfs(child);
+        }
+    }
+}
+
+//.............................no of connected components.........................
+
+int cc_count=0;
+for(int i=1;i<=n;i++)
+{
+    if(visited[i]==0)
+    dfs(i),cc_count++;
+}
+cout<<"no of connected components are "<<cc_count;
+
+//...........................sssp using dfs....................................
+
+vector<int> ar[10001];
+int visited[10001];
+int dist[10001];
+
+void dfs(int node,int d)
+{
+    visited[node]=1;
+    dist[node]=d;
+    for(int child : ar[node])
+    {
+        if(visited[child] == 0)
+        {
+            dfs(child,dist[node]+1);
+        }
+    }
+}
+int main()
+{
+  dfs(1,0)
+}
+
+//.......................Bipartite graph Test.............................
+
+vector<int> ar[10001];
+int visited[10001];
+int col[10001];
+bool dfs(int v,int c)
+{
+    visited[v] = 1;
+    col[v] = c;
+    
+    for(int child: ar[v])
+    {
+        if(vis[child] == 0)
+        {
+            if(dfs(child,c^1) == false)
+            {
+                return false;
+            }
+        }
+        else
+        {
+            if(col[v] == col[child])
+            return false;
+        }
+    }
+    return true;
+}
+
+//.......................cycle detection in graph using DFS........................
+(returns true if there is cycle otherwise returns false)
+bool dfs(int node, int par)
+{
+    visited[node]=1;
+    
+    for(int child: ar[node])
+    {
+        if(visited[child] == 0)
+        {
+            if(dfs(child,node) == true)
+            {
+                return true;
+            }
+        }
+        else
+        {
+            if(child != par)
+            return true;
+        }
+    }
+    return false;
+}
+
+//.........................In/Out time implementation..............................
+
+int timer=1;
+bool dfs(int v)
+{
+    visited[v]=1;
+    In[v] = timer++;
+    
+    for(int child : ar[v])
+    {
+        if(visited[child] == 0)
+        dfs(child);
+    }
+    Out[v] = timer++;
+}
+
+//.........................finding the diameter of Tree...............................
+
+vector<int> ar[10001];
+int visited[10001];
+
+int maxD,maxNode;
+
+void dfs(int node, int d)
+{
+    visited[node]=1;
+    if(d>maxD) maxD=d, maxNode=node;
+    for(int child: ar[node])
+    if(visited[child] == 0)
+    dfs(child, d+1);
+}
+int main()
+{
+    maxD = -1;
+    dfs(1,0);
+    REP(i,n) visited[i]=0;
+    maxD = -1;
+    dfs(maxNode, 0);
+    cout<<MaxD<<endl;
+}
+
+//.............................calculating subtree size using DFS in O(N).......................
+
+int visited[100001],subSize[100001];
+int dfs(int node)
+{
+    visited[node] =1;
+    int curr_size = 1;
+    for(int child : ar[node])
+    {
+        if(visited[child] == 0)
+        {
+            curr_size + = dfs(child);
+        }
+    }
+    subSize[node] = curr_size;
+    return curr_size;
+}
+
+
+////////////////////////////////////////////////////////////////// BFS /////////////////////////////////////////////////////////////////////////////
+
+//..............................min distance of each node from source node....................................
+void bfs(int src)
+{
+    queue<int> q;
+    q.push(src);
+    visited[src]=1;
+    dist[src]=0;
+    while(q.size()>0)
+    {
+        int curr = q.front();
+        q.pop();
+        
+        for(int child : ar[curr])
+        {
+            if(visited[child] == 0)
+            {
+                q.push(child);
+                dist[child] = dist[curr] + 1;
+                visited[child] = 1;
+            }
+        }
+    }
+}
