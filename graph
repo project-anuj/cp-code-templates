@@ -302,7 +302,7 @@ int main()
 .....................................
 1. cell = node
 2. sides = edges
-3. sides + corner = edges
+3. sides + corner = edges (in some cases) 
 .....................................
 
 int n,m;
