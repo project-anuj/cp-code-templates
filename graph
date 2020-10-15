@@ -407,3 +407,77 @@ int main()
 no of connected components = 6
 */
 
+////////////////////////////////////////////////////Apply BFS on 2D grid////////////////////////////////////////////////////////
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int n,m;
+int ar[1001][1001];
+int visited[1001][1001];
+int dist[1001][1001];
+
+bool isValid(int x,int y)
+{
+	if(x<1 || x>n ||y<1 ||y>m)
+	return false;
+	
+	if(visited[x][y]==1)
+	return false;
+	
+	return true;
+}
+int dx[]={-1,0,1,0};
+int dy[]={0,1,0,-1};
+void bfs(int srcX,int srcY)
+{
+	queue<pair<int,int>> q;
+	q.push({srcX,srcY});
+	visited[srcX][srcY]=1;
+	dist[srcX][srcY]=0;
+	
+	while(q.size()>0)
+	{
+		pair<int,int> curr= q.front();
+		q.pop();
+		int currX=curr.first;
+		int currY=curr.second;
+		
+		for(int i=0;i<4;i++)
+		if(isValid(currX+dx[i],currY+dy[i]))
+		{
+			int newX=currX+dx[i];
+			int newY=currY+dy[i];
+			q.push({newX,newY});
+			visited[newX][newY]=1;
+			dist[newX][newY]=dist[currX][currY]+1;
+		}
+	}
+	cout<<"Distance array is \n";
+	for(int i=1;i<=n;i++)
+	{
+		for(int j=1;j<=m;j++)
+		cout<<dist[i][j]<<" ";
+		cout<<endl;
+	}
+	
+}
+int main()
+{
+	cin>>n>>m;
+	int x,y;
+	cin>>x>>y;
+	bfs(x,y);
+}
+
+/*
+4 4
+1 1
+Distance array is
+0 1 2 3
+1 2 3 4
+2 3 4 5
+3 4 5 6
+*/
+
+
