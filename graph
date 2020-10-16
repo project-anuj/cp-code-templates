@@ -561,4 +561,81 @@ int main()
 		}
 	}
 }
- 
+ ............................................................................
+ 				OR
+.............................................................................
+
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<int> ar[100];
+vector<int> tr[100];
+int visited[100];
+vector<int> order;
+vector<int> scc;
+
+void dfs(int node)
+{
+	visited[node]=1;
+	
+	for(auto child:ar[node])
+	if(visited[child]==0)
+	dfs(child);
+	
+	order.push_back(node);
+}
+
+void dfs1(int node)
+{
+	visited[node]=1;
+	for(auto child : tr[node])
+	if(visited[child]==0)
+	dfs1(child);
+	
+	scc.push_back(node); 
+}
+int main()
+{
+	int t;
+	cin>>t;
+	while(t--)
+	{	
+		int n,m;
+		cin>>n>>m;
+		for(int i=1;i<=n;i++)
+		ar[i].clear(),tr[i].clear(),visited[i]=0;
+		order.clear();
+		for(int i=0;i<m;i++)
+		{
+		int a,b;
+		cin>>a>>b;
+		ar[a].push_back(b);
+		tr[b].push_back(a);
+		}
+		for(int i=1;i<=n;i++)
+		if(visited[i]==0)
+		dfs(i);
+		
+		for(int i=1;i<=n;i++)
+		visited[i]=0;
+		int i=1;
+		reverse(order.begin(),order.end());
+		for(auto  x : order)
+		{	scc.clear();
+			if(visited[x]==0)
+			{
+				dfs1(x);
+				
+				cout<<"strongly connected component "<<i<<" is\n";
+				for(auto y: scc)
+				cout<<y<<" ";
+				cout<<endl;
+				i++;
+			}
+		}
+		
+	}
+	
+}
+
+///////////////////////////////////////////////////
