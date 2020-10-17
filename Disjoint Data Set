@@ -1,0 +1,35 @@
+...............................find(n) (returns the parent of n)...................................
+find( int n)
+{
+  while(1)
+  {
+    if(n==parent[n])
+      return n;
+    else
+      n=parent[n];
+  }
+}
+...................................................
+                      OR
+...................................................
+find(int n)
+{
+  if(n==parent[n])
+    return n;
+  else
+    return find(parent[n]);  
+}
+
+..............................union(a,b) (merge the two sets of a and b belongs to different sets).....................................
+
+union(a,b)
+{
+    a = find(a);
+    b = find(b);
+    
+    if(a==b)
+    return;
+    else
+    parent[a]=b;
+}
+
