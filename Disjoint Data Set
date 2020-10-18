@@ -33,3 +33,85 @@ union(a,b)
     parent[a]=b;
 }
 
+..................................Path Compression...............................
+(used to enhanced the running time of the disjoint set algorithm)
+....................................
+               Iterative
+....................................
+
+find(a)
+{
+    vector<int> v;
+    while(parent[a]>0)
+    {
+        v.push_back(a);
+        a=parent[a];
+    }
+    for(int i=0;i<v.size();i++)
+      parent[v[i]] = a;
+    return a;
+}
+
+......................................
+            Recursive
+......................................
+
+find(a)
+{
+    if(parent[a]<0)
+    return a;
+    else
+    {
+        int x=find(parent[a]);
+        parent[a]=x;
+        return x;
+    }
+}
+
+......................................
+                  OR
+......................................
+
+find(a)
+{
+    if(parent[a]<0)
+    return a;
+    return parent[a] = find(parent[a]);
+} 
+
+.....................................................Union By Rank...........................................
+(optimise the running time of union())
+(rank = size of each set)
+
+int par[10001],R[10001];
+
+void merge(int a,int b)
+{
+    a=find(a);
+    b=find(b);
+    
+    if(a==b)
+    return;
+    
+    if(R[a] >R[b])
+    {
+      par[b]=a;
+      R[a]+=R[b];
+    }
+    else
+    {
+      par[a]=b;
+      R[b]+=R[a];
+    }
+    
+}
+int main()
+{
+  int n;
+  cin>>n;
+  for(int i=1;i<=n;i++)
+  par[i]=-1,R[i]=1;
+  merge(5,10);
+}
+
+............................................END..................................................
