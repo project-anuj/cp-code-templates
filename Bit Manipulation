@@ -16,6 +16,13 @@ if(res==0)
 else
     cout<<"true"<<endl;
 
+.................................
+                OR
+.................................
+if(n & (1 << i ))
+    cout<<"true";
+else
+    cout<<"false";
 ............................ Counting No of Set Bits (also known as the Hamming weight)...............................
 
 .................................
@@ -98,3 +105,72 @@ Observation..............
 
 //////////////////////////////////////////////////Total Sum of all Pairs XOR ///////////////////////////////////////////////////
 
+Given an array with n elements, calculate following
+    (A1 ^ A2)+(A1 ^ A3)+(A1 ^ A4)+........+(A1 ^ An)^+
+              (A2 ^ A3)+(A2 ^ A4)+........+(A2 ^ An)^+
+                                                    '
+                                                    '
+                                                    '
+                                           (An-1 ^ An)
+                                           
+ ..............................Naive approach O(n^2).............................
+    int res=0;
+    for(int i=1;i<=n;i++)
+    {
+        for(int j=i+1;j<=n;j++)
+        {
+            res += ar[i]^ar[j];
+        }
+    }
+ ................................................................................
+ 
+ Observation........
+        let...
+           5        3       9
+           0101     0011    1001
+           
+           5^3 = 0110
+           5^9 = 1100
+           3^9 = 1010
+           Total Sum = 0*(2^0)+2*(2^1)+2*(2^2)+2*(2^3)=28
+           
+           Here , no. of set bits at ith bit only contribute to the sum
+           No of pairs with ith bit set = (no of elements with ith bit 1)*(no of elements with ith bit 0)
+           
+           code.....(O(nlog(n))
+                    
+                    int ar[10001];
+                    int n,res=0;
+                    cin>>n;
+                    for(int i=1;i<=n;i++)
+                    cin>>ar[i];
+                    
+                    for(int i=0;i<31;i++)           //(Assume 32 bit integer)
+                    {
+                        int cnt0=0, cnt1=0;
+                        
+                        for(int j=1;j<=n;j++)
+                        {
+                            if(ar[j] & (1 << i))     //(ith bit set)
+                            cnt1++;
+                            else
+                            cnt0++;
+                        }
+                        int p = cnt0 * cnt1;
+                        res +=(1<<i)*p;
+                    }
+                    cout<<res<<endl;
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
