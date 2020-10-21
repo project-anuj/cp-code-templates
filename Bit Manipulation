@@ -4,7 +4,8 @@
     simply the one’s complement of a number. Lets take an example.
     N = 5 = 101
     ~N = ~5 = ~(101) = 010 = 2
-
+    The formula ~x = −x−1 holds, for example, ~29 = −30.
+	
 2) AND ( & ): Bitwise AND is a binary operator that operates on two equal-length bit patterns. If both bits in the compared position of the bit patterns are 1, the bit in the
     resulting bit pattern is 1, otherwise 0.
     A = 5 = (101)2 , B = 3 = (011)2 A & B = (101)2 & (011)2= (001)2 = 1
@@ -23,6 +24,8 @@
     equivalent to multiplying the bit pattern with  ( if we are shifting k bits ).
 
 6) Right Shift ( >> ): Right shift operator is a binary operator which shift the some number of bits, in the given bit pattern, to the right and append 1 at the end.
+
+
 
 
 ....................................................Power of 2.....................................................
@@ -219,7 +222,7 @@ Given an array with n elements, calculate following
  /////////////////////////////////////////////////to generate all the possible subsets of a set////////////////////////////////////////////////////
     
     
-    there are 2N possible subsets of any given set with N elements. there are 2N possible subsets of any given set with N elements.
+    there are 2^N possible subsets of any given set with N elements.
     we represent each element in a subset with a bit. A bit can be either 0 or 1, thus we can use this to denote whether the corresponding element belongs to this given subset
     or not. So each bit pattern will represent a subset.
 
@@ -279,15 +282,21 @@ int main()
 
     }
  
- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+ ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 Tricks with Bits:
 
-1) x ^ ( x & (x-1)) : Returns the rightmost 1 in binary representation of x.
+ 1) The formula x & (x−1) sets the last one bit of x to zero.
+ 
+ 2) The formula x | (x−1) inverts all the bits after the last one bit.
+
+3) x ^ ( x & (x-1)) : Returns the rightmost 1 in binary representation of x.
     e.g.
     x = 10 = (1010)2 ` x & (x-1) = (1010) & (1001) = (1000)
     x ^ (x & (x-1)) = (1010) ^ (1000) = (0010)
  
-2) x & (-x) : Returns the rightmost 1 in binary representation of x
+4) x & (-x) : Returns the rightmost 1 in binary representation of x.
     
     e.g.
         x = 10 = (1010)
@@ -295,25 +304,68 @@ Tricks with Bits:
         x & (-x) = (1010) & (0110) = 0010
  
  
- 3) x | (1 << n) : Returns the number x with the nth bit set.
+ 5) x | (1 << n) : Returns the number x with the nth bit set.
     e.g.
         x = 10 = (1010)2 n = 2
         1 << n = (0100)
         x | (1 << n) = (1010) | (0100) = (1110)
 
+6) the formula x & ~(1 << k) sets the kth bit of x to zero.
+
+7)  the formula x ^ (1 << k) inverts the kth bit of x.
+
+8) Using the and operation, we can check if a number x is even because x & 1 = 0 if x is even, and x & 1 = 1 if x is odd.
+
+9) x is divisible by 2^k exactly when x & (2^k −1) = 0.
+
+10) In particular, the kth bit of a number is one exactly when x & (1 << k) is not zero
+
+11) Additional functions...
+	The g++ compiler provides the following functions for counting bits:
+	
+	• __builtin_clz(x): the number of zeros at the beginning of the number
+	
+	• __builtin_ctz(x): the number of zeros at the end of the number
+	
+	• __builtin_popcount(x): the number of ones in the number
+	
+	• __builtin_parity(x): the parity (even or odd) of the number of ones
+	
+	The functions can be used as follows:
+	
+	int x = 5328; // 00000000000000000001010011010000
+	cout << __builtin_clz(x) << "\n"; // 19
+	cout << __builtin_ctz(x) << "\n"; // 4
+	cout << __builtin_popcount(x) << "\n"; // 5
+	cout << __builtin_parity(x) << "\n"; // 1
+	
+	While the above functions only support int numbers, there are also long long
+	versions of the functions available with the suffix ll.
+
+12) Set operations..........
+	Set operations can be implemented as follows as bit operations:
+	
+			set syntax 	bit syntax
+	intersection 	   a ∩ b 	  a & b
+	union 		   a ∪ b 	  a | b
+	complement 	    a¯ 		  ~a
+	difference 	   a\ b           a & (~b)
+
+	For example, the following code first constructs the sets x = {1,3,4,8} and
+		y = {3,6,8,9}, and then constructs the set z = x∪ y = {1,3,4,6,8,9}:
+		
+		int x = (1<<1)|(1<<3)|(1<<4)|(1<<8);
+		int y = (1<<3)|(1<<6)|(1<<8)|(1<<9);
+		int z = x|y;
+		cout << __builtin_popcount(z) << "\n"; // 6
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
+//////////////////////////////////////////////////////////////////////  Bit optimizations  /////////////////////////////////////////////////////////////////////////
 
-
-
-
-
-
-
-
-
-
+Many algorithms can be optimized using bit operations. Such optimizations do not change the time complexity of the algorithm, but they may have a large
+impact on the actual running time of the code.
 
 
 
