@@ -1,0 +1,38 @@
+.....................................Primality Test O(sqrt(n))............................................
+
+..........................................
+          Naive Approach O(n)
+..........................................
+
+bool isPrime(int n)
+{
+  if(n==1)
+    return false;
+  for(int i=2;i<n;i++)
+  {
+    if(n%i==0)
+      return false;
+  }
+  return true;
+}
+
+...........................................
+                O(sqrt(n))
+...........................................
+Approach......
+        . All divisors of a number N occur in pairs of(a,b) i.e.   a * b = n
+        . for a divisor pair (a,b) one of them lies below sqrt(n) and other lies above sqrt(n) 
+        
+bool isPrime(int n)
+{
+    if(n==1)
+        return false;
+    for(int i=2 ;i*i<=n;i++)
+    {
+        if(n % i == 0)
+        return false;
+    }
+    return true;
+}
+               
+               
