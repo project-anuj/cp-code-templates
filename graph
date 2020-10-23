@@ -726,7 +726,16 @@ int LCA(int a,int b)
 .............................................................
 	     Binary Lifting O() time O() space
 .............................................................
-
+Instead of making jump of 1, we will make jump of highest length l, such that
+	1. l is power of two.
+	2. l<=d
+	e.g...
+	if d=13,
+	d=13  l=8
+	d=5   l=4
+	d=1   l=1
+	
+	
 
 
 
