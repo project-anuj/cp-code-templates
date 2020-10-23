@@ -695,5 +695,56 @@ int main()
 	cout<<sum<<endl;
 }
 
-/////////////////////////////////////////////////
+///////////////////////////////////////////////////////////Lowest Common Ancestor//////////////////////////////////////////////////////////////
+..........................................................
+	  Novice Approach O(n) time & O(n) space
+..........................................................
 
+1) finding the difference between levels of two node.
+2) move the bottom node to up till both nodes have same levels.
+3) move both node up untill their parents become equal.
+
+int LCA(int a,int b)
+{
+	int d = level[b]-level[a];
+	while(d>0)
+	{
+		b=parent[b];
+		d--;
+	}
+	if(a==b)
+	return a;
+	
+	while(parent[a] != parent[b])
+	{
+		a=parent[a];
+		b=parent[b];
+	}
+	return parent[a];
+}
+
+.............................................................
+	     Binary Lifting O() time O() space
+.............................................................
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.................................................................. E N D ...........................................................................
