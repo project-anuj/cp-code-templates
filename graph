@@ -696,9 +696,9 @@ int main()
 }
 
 ///////////////////////////////////////////////////////////Lowest Common Ancestor//////////////////////////////////////////////////////////////
-..........................................................
-	  Novice Approach O(n) time & O(n) space
-..........................................................
+..............................................................................
+	  Novice Approach O(n) time & O(n) space for below algorithm
+..............................................................................
 
 1) finding the difference between levels of two node.
 2) move the bottom node to up till both nodes have same levels.
@@ -723,9 +723,10 @@ int LCA(int a,int b)
 	return parent[a];
 }
 
-.............................................................
-	     Binary Lifting O() time O() space
-.............................................................
+.............................................................................................................................................
+	     		Binary Lifting
+The time taken in pre-processing is O(NlogN) and every query takes O(logN) time. So the overall time complexity of the solution is O(NlogN).
+.............................................................................................................................................
 Instead of making jump of 1, we will make jump of highest length l, such that
 	1. l is power of two.
 	2. l<=d
@@ -735,7 +736,107 @@ Instead of making jump of 1, we will make jump of highest length l, such that
 	d=5   l=4
 	d=1   l=1
 	
+	algo...........
+		int LCA(int a,int b)
+		{
+			if(level[a] > level[b]) swap(a,b);
+			int d=level[b]-level[a];
+			while(d > 0)
+			{
+				int i=log2(d);
+				b=LCA[b][i];
+				d - = (1<<i);
+			}
+			if(a==b) return a;
+			for(int i=maxN;i>=0;i--)
+			if(LCA[a][i] !=-1 && (LCA[a][i] != LCA[b][i])
+			a = LCA[a][i], b = LCA[b][i];
+			
+			return par[a];
+		}
+	..................................distance between two nodes of tree (based on above)..............................
+	code..........
+		
+		#include<bits/stdc++.h>
+		using namespace std;
+
+		vector<int> ar[1001];
+		const int maxN=10; // max no of parent each node have
+		int level[1001],LCA[1001][maxN+1];
+
+		void dfs(int node,int lvl, int par)
+		{
+			level[node] = lvl;
+			LCA[node][0] = par;
+
+			for(int child: ar[node])
+			if(child != par)
+			dfs(child,lvl+1,node);
+		}
+		void init(int n)
+		{
+			dfs(1,0,-1);
+			for(int i=1;i<maxN;i++)
+			{
+				for(int j=1;j<=n;j++)
+				if(LCA[j][i-1] != -1)
+				{
+					int par = LCA[j][i-1];
+					LCA[j][i] = LCA[par][i-1];
+				}
+			}
+		}
+		int getLCA(int a,int b)
+		{
+			if(level[b]<level[a]) swap(a,b);
+			int d=level[b]-level[a];
+			while(d > 0)
+			{
+				int i = log2(d);
+				b = LCA[b][i];
+				d-=1<<i;
+			}
+			if(a==b) return a;
+
+			for(int i=maxN;i>=0;i--)
+			if(LCA[a][i] != -1 && (LCA[a][i] != LCA[b][i]))
+			{
+				a = LCA[a][i], b= LCA[b][i];
+			}
+			return LCA[a][0];
+		}
+
+		int getDist(int a,int b)
+		{
+			int lca = getLCA(a,b);
+			return level[a]+level[b] - 2*level[lca];
+		}
+		int main()
+		{
+			int n,a,b,q;
+			cin>>n;
+			for(int i=1;i<=n;i++)
+			for(int j=0;j<=maxN;j++)
+				LCA[i][j] = -1;
+			for(int i=1;i<n;i++)
+			cin>>a>>b , ar[a].push_back(b) , ar[b].push_back(a);
+
+			init(n);
+			cin>>q;
+			while(q--)
+			{
+				cin>>a>>b;
+				cout<<getDist(a,b)<<endl;
+			}
+		}
 	
+
+
+////////////////////////////////////////////////// Dijkstra Algorithm ///////////////////////////////////////////////////
+Problem Statement........
+		Given a weighted graph (directed / undirected) and a source node from the graph , find shortest path from source node to every other node.
+..........................................................................................................................................................
+
 
 
 
