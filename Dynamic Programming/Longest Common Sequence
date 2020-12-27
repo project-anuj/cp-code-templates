@@ -1,0 +1,21 @@
+Basic Problems:-
+1) Longest Common SubString
+2) Print LCS
+3) Shortest Common SuperSequence
+4) Print SCS
+5) Min no of insertion and deletion 'a' -> 'b'
+6) Longest Repeating Subsequence
+7) Length of Largest SubSequence of 'a' which is a substring in 'b'
+8) Subsequence Pattern Matching
+9) Count how many times 'a' appears as subsequence in 'b'
+10) Longest Palindromic Subsequence
+11) Longest Palindromic SubString
+12) Count of Palindromic Substring
+13) Min no of Deletion in a string to make it a Palindrome
+14) Min no of Insertion in a string to make it a Palindrome
+
+
+..............................................Longest Common SubString......................................................
+.................
+    Recursive
+.................
