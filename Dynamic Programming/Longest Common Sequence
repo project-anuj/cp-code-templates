@@ -15,7 +15,94 @@ Basic Problems:-
 14) Min no of Insertion in a string to make it a Palindrome
 
 
-..............................................Longest Common SubString......................................................
+..............................................Longest Common SubSequence......................................................
 .................
     Recursive
 .................
+#include<bits/stdc++.h>
+using namespace std;
+
+int LCS(string x,string y,int m,int n)
+{
+	if(m==0||n==0)
+	return 0;
+	if(x[m-1]==y[n-1])
+	return 1+LCS(x,y,m-1,n-1);
+	else
+	return max(LCS(x,y,m-1,n),LCS(x,y,m,n-1));
+}
+int main()
+{
+	string x,y;
+	cin>>x>>y;
+	cout<<LCS(x,y,x.length(),y.length());
+}
+
+....................
+    Memoization
+....................
+
+#include<bits/stdc++.h>
+using namespace std;
+#define MAX 100
+int static dp[MAX][MAX];
+
+int LCS(string x,string y,int m,int n)
+{
+	if(m==0||n==0)
+	return 0;
+	if(dp[m][n]!=-1)
+	return dp[m][n];
+	if(x[m-1]==y[n-1])
+	return dp[m][n] = 1+LCS(x,y,m-1,n-1);
+	else
+	return dp[m][n] = max(LCS(x,y,m-1,n),LCS(x,y,m,n-1));
+}
+int main()
+{
+	memset(dp,-1,sizeof(dp));
+	string x,y;
+	cin>>x>>y;
+	cout<<LCS(x,y,x.length(),y.length());
+}
+
+..................
+     Top-Down
+..................
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int LCS(string x,string y,int m,int n)
+{	
+	int dp[m+1][n+1];
+	memset(dp,-1,sizeof(dp));
+	for(int i=0;i<=m;i++)
+	{
+		for(int j=0;j<=n;j++)
+		{
+			if(i==0||j==0)
+			dp[i][j]=0;
+		}
+	}
+	for(int i=1;i<=m;i++)
+	{
+		for(int j=1;j<=n;j++)
+		{
+			if(x[i-1]==y[j-1])
+			dp[i][j]=1+dp[i-1][j-1];
+			else
+			dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+		}
+	}
+	return dp[m][n];
+}
+int main()
+{
+	string x,y;
+	cin>>x>>y;
+	cout<<LCS(x,y,x.length(),y.length());
+}
+
+..............................................Longest Common SubString....................................................
+
