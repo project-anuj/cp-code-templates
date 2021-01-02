@@ -1,0 +1,36 @@
+Basic problems to learn in MCM:
+  1) MCM
+  2) Printing MCM
+  3) Evaluate expression to True/ Boolean Paranthesization
+  4) Min/Max value of an Expression
+  5) Palinrome Partitioning 
+  6) Scrambled String 
+  7) Egg Dropping Problem
+
+............................................................. MCM ............................................................
+
+Identification + Format :
+-------------------------
+Given String or Array , we have to find the ans by breaking it temporarily in to [i,k] & [k+1,j] and shifting the value of k from i to j.
+
+CODE FORMAT:
+    int solve(int arr[],int i,int j)
+    {
+        //(Base Condition)
+        if( i>j ) // may be different based on questions
+        return 0;
+        
+        // (Main Code) 
+        for(int k=i; k<j; k++)
+        {
+            temp_ans = solve(arr,i,k) +/- solve(arr,i+1,j);
+            
+            ans <------ any_fun(temp_ans);
+        }
+        return ans;
+    }
+
+.....................
+      Recursive
+.....................
+
