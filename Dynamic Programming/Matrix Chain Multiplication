@@ -33,4 +33,64 @@ CODE FORMAT:
 .....................
       Recursive
 .....................
+#include<bits/stdc++.h>
+using namespace std;
+
+int MCM(int arr[],int i,int j)
+{
+	if(i>=j)
+		return 0;
+		
+	int mn = INT_MAX;
+	for(int k=i;k<=j-1;k++)
+	{
+		int temp_ans = MCM(arr,i,k)+MCM(arr,k+1,j)+arr[i-1]*arr[k]*arr[j];
+		if(temp_ans < mn)
+		mn = temp_ans;
+	}
+	return mn;
+}
+int main()
+{
+	int n;
+	cin>>n;	
+	int arr[n];
+	for(int i=0;i<n;i++)
+	cin>>arr[i];
+	cout<<MCM(arr,1,n-1);
+}
+.......................
+      Memoisation
+.......................
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int static dp[1001][1001];
+int MCM(int arr[],int i,int j)
+{
+	if(i>=j)
+		return 0;
+	if(dp[i][j]!=-1)
+		return dp[i][j];
+	int mn = INT_MAX;
+	for(int k=i;k<=j-1;k++)
+	{
+		int temp_ans = MCM(arr,i,k)+MCM(arr,k+1,j)+arr[i-1]*arr[k]*arr[j];
+		if(temp_ans < mn)
+		mn = temp_ans;
+	}
+	return dp[i][j]=mn;
+}
+int main()
+{
+	memset(dp,-1,sizeof(dp));
+	int n;
+	cin>>n;	
+	int arr[n];
+	for(int i=0;i<n;i++)
+	cin>>arr[i];
+	cout<<MCM(arr,1,n-1);
+}
+...................................................Palindrome partitioning ...........................................................
 
