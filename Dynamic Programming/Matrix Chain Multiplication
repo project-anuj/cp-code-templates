@@ -93,4 +93,161 @@ int main()
 	cout<<MCM(arr,1,n-1);
 }
 ...................................................Palindrome partitioning ...........................................................
+..........................
+	Recursive
+..........................
+#include<bits/stdc++.h>
+using namespace std;
+
+bool isPalindrome(string s,int i,int j)
+{
+	if(i == j)
+		return true;
+	if(i > j)
+		return true;
+	while(i<j)
+	{
+		if(s[i]!=s[j])
+		return false;
+		i++;
+		j--;
+	}
+	return true;
+}
+int Solve(string s,int i,int j)
+{
+	if(i>=j)
+		return 0;
+	if(isPalindrome(s,i,j))
+		return 0;
+	int mn = INT_MAX;
+	for(int k=i;k<=j-1;k++)
+	{
+		int temp = 1+ Solve(s,i,k)+Solve(s,k+1,j);
+		if(temp<mn)
+		mn = temp;
+	}
+	return mn;
+}
+int main()
+{
+	string s;
+	cin>>s;
+	cout<<Solve(s,0,s.length()-1);
+}
+
+..........................
+	Memoisation
+..........................
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int static dp[1001][1001];
+bool isPalindrome(string s,int i,int j)
+{
+	if(i == j)
+		return true;
+	if(i > j)
+		return true;
+	while(i<j)
+	{
+		if(s[i]!=s[j])
+		return false;
+		i++;
+		j--;
+	}
+	return true;
+}
+int Solve(string s,int i,int j)
+{
+	if(i>=j)
+		return 0;
+	if(isPalindrome(s,i,j))
+		return 0;
+	if(dp[i][j]!=-1)
+		return dp[i][j];
+	int mn = INT_MAX;
+	for(int k=i;k<=j-1;k++)
+	{
+		int temp = 1+ Solve(s,i,k)+Solve(s,k+1,j);
+		if(temp<mn)
+		mn = temp;
+	}
+	return dp[i][j]=mn;
+}
+int main()
+{
+	memset(dp,-1,sizeof(dp));
+	string s;
+	cin>>s;
+	cout<<Solve(s,0,s.length()-1);
+}
+
+.................................
+	More Optimisation
+.................................
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int static dp[1001][1001];
+bool isPalindrome(string s,int i,int j)
+{
+	if(i == j)
+		return true;
+	if(i > j)
+		return true;
+	while(i<j)
+	{
+		if(s[i]!=s[j])
+		return false;
+		i++;
+		j--;
+	}
+	return true;
+}
+int Solve(string s,int i,int j)
+{
+	if(i>=j)
+		return 0;
+	if(isPalindrome(s,i,j))
+		return 0;
+	if(dp[i][j]!=-1)
+		return dp[i][j];
+	int mn = INT_MAX;
+	for(int k=i;k<=j-1;k++)
+	{
+//		int temp = 1+ Solve(s,i,k)+Solve(s,k+1,j);
+		int left,right,temp;
+		if(dp[i][k]!=-1)
+			left = dp[i][k];
+		else
+		{
+			left = Solve(s,i,k);
+			dp[i][k] = left;
+		}
+		
+		if(dp[k+1][j] != -1)
+			right = dp[k+1][j];
+		else
+		{
+			right = Solve(s,k+1,j);
+			dp[k+1][j] = right;
+		}
+		temp = 1+ left + right;
+		if(temp<mn)
+		mn = temp;
+	}
+	return dp[i][j]=mn;
+}
+int main()
+{
+	memset(dp,-1,sizeof(dp));
+	string s;
+	cin>>s;
+	cout<<Solve(s,0,s.length()-1);
+}
+
+..................................... Evaluate Expression to True Boolean Parenthesization ............................................
 
