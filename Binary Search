@@ -1,0 +1,275 @@
+_______________________________________________________________________________________________________
+                                        Binary Search( Log2(n)
+_______________________________________________________________________________________________________
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int BinarySearch(int a[],int n,int k)
+{
+	int start=0;
+	int end=n-1;
+	while(start<=end)
+	{
+		int mid=start+(end-start)/2;
+		if(a[mid]==k)
+		return mid;
+		if(a[mid]>k)
+		end=mid-1;
+		else
+		start=mid+1;
+	}
+	return -1;
+}
+int main()
+{
+	int n;
+	cin>>n;
+	int a[n];
+	for(int i=0;i<n;i++)
+	cin>>a[i];
+	
+	int k;
+	cin>>k;
+	int res=BinarySearch(a,n,k);
+	if(res==-1)
+	cout<<"Element not found";
+	else
+	cout<<"Element found at "<<res;
+}
+
+___________________________________________________________________________________________________________________________________________________________________________________
+                                                            Binary Search on Descending Sorted Array
+___________________________________________________________________________________________________________________________________________________________________________________
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int DescBinarySearch(int a[],int n,int k)
+{
+	int start=0;
+	int end=n-1;
+	while(start<=end)
+	{
+		int mid=start+(end-start)/2;
+		if(a[mid]==k)
+		return mid;
+		if(a[mid]>k)
+		start=mid+1;
+		else
+		end=mid-1;
+	}
+	return -1;
+}
+int main()
+{
+	int n;
+	cin>>n;
+	int a[n];
+	for(int i=0;i<n;i++)
+	cin>>a[i];
+	
+	int k;
+	cin>>k;
+	int res=DescBinarySearch(a,n,k);
+	if(res==-1)
+	cout<<"Element not found";
+	else
+	cout<<"Element found at "<<res;
+}
+
+
+___________________________________________________________________________________________________________________________________________________________________________________
+                                                        Order Agnostic Search ( Order is not known)
+___________________________________________________________________________________________________________________________________________________________________________________
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int BinarySearch(int a[],int n,int k)
+{
+	int start=0;
+	int end=n-1;
+	while(start<=end)
+	{
+		int mid=start+(end-start)/2;
+		if(a[mid]==k)
+		return mid;
+		if(a[mid]>k)
+		end=mid-1;
+		else
+		start=mid+1;
+	}
+	return -1;
+}
+int DescBinarySearch(int a[],int n,int k)
+{
+	int start=0;
+	int end=n-1;
+	while(start<=end)
+	{
+		int mid=start+(end-start)/2;
+		if(a[mid]==k)
+		return mid;
+		if(a[mid]>k)
+		start=mid+1;
+		else
+		end=mid-1;
+	}
+	return -1;
+}
+int main()
+{
+	int n;
+	cin>>n;
+	int a[n];
+	for(int i=0;i<n;i++)
+	cin>>a[i];
+	
+	int k;
+	cin>>k;
+	if(a[0]>a[1])
+	{
+	int res=DescBinarySearch(a,n,k);
+	if(res==-1)
+	cout<<"Element not found";
+	else
+	cout<<"Element found at "<<res;
+	}
+	else
+	{		
+	int res=BinarySearch(a,n,k);
+	if(res==-1)
+	cout<<"Element not found";
+	else
+	cout<<"Element found at "<<res;
+	}
+}
+
+
+___________________________________________________________________________________________________________________________________________________________________________________
+                                                        First and Last Occurance of an element
+___________________________________________________________________________________________________________________________________________________________________________________
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int binary_first(int a[],int n,int x)
+{
+	int res=-1;
+	int start=0;
+	int end=n-1;
+	while(start<=end)
+	{
+		int mid=start+(end-start)/2;
+		if(a[mid]==x)
+		{
+			res=mid;
+			end=mid-1;
+		}
+		else if(a[mid]<x)
+		start=mid+1;
+		else
+		end=mid-1;
+	}
+	return res;
+}
+int binary_last(int a[],int n,int x)
+{
+	int res=-1;
+	int start=0;
+	int end=n-1;
+	while(start<=end)
+	{
+		int mid=start+(end-start)/2;
+		if(a[mid]==x)
+		{
+			res=mid;
+			start=mid+1;
+		}
+		else if(a[mid]<x)
+		start=mid+1;
+		else
+		end=mid-1;
+	}
+	return res;
+}
+int main()
+{
+	int n;
+	cin>>n;
+	int a[n];
+	for(int i=0;i<n;i++)
+	cin>>a[i];
+	int x;
+	cin>>x;
+	cout<<binary_first(a,n,x)<<endl;
+	cout<<binary_last(a,n,x);
+}
+
+
+___________________________________________________________________________________________________________________________________________________________________________________
+                                                        Count of an Element in a Sorted Array
+___________________________________________________________________________________________________________________________________________________________________________________
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int binary_first(int a[],int n,int x)
+{
+	int res=-1;
+	int start=0;
+	int end=n-1;
+	while(start<=end)
+	{
+		int mid=start+(end-start)/2;
+		if(a[mid]==x)
+		{
+			res=mid;
+			end=mid-1;
+		}
+		else if(a[mid]<x)
+		start=mid+1;
+		else
+		end=mid-1;
+	}
+	return res;
+}
+int binary_last(int a[],int n,int x)
+{
+	int res=-1;
+	int start=0;
+	int end=n-1;
+	while(start<=end)
+	{
+		int mid=start+(end-start)/2;
+		if(a[mid]==x)
+		{
+			res=mid;
+			start=mid+1;
+		}
+		else if(a[mid]<x)
+		start=mid+1;
+		else
+		end=mid-1;
+	}
+	return res;
+}
+int main()
+{
+	int n;
+	cin>>n;
+	int a[n];
+	for(int i=0;i<n;i++)
+	cin>>a[i];
+	int x;
+	cin>>x;
+	int first=binary_first(a,n,x);
+	int last=binary_last(a,n,x);
+	cout<<last-first+1;
+}
+
+___________________________________________________________________________________________________________________________________________________________________________________
+                                                       Number of Times a Sorted array is Rotated
+___________________________________________________________________________________________________________________________________________________________________________________
+
