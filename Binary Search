@@ -273,3 +273,225 @@ ________________________________________________________________________________
                                                        Number of Times a Sorted array is Rotated
 ___________________________________________________________________________________________________________________________________________________________________________________
 
+#include<bits/stdc++.h>
+using namespace std;
+
+int noOfRotation(int a[],int n)
+{
+	int start=0;
+	int end=n-1;
+	while(start<=end)
+	{
+		if(a[start]<a[end])
+		return start;
+		
+		int mid=start+(end-start)/2;
+		int prev=(mid+n-1)%n;
+		int next=(mid+1)%n;
+		if(a[mid]<a[prev] && a[mid]<a[next])
+		return mid;
+		if(a[mid]<a[end])
+		end=mid-1;
+		else
+		start=mid+1;
+	}
+	return -1;
+}
+int main()
+{
+	int n;
+	cin>>n;
+	int a[n];
+	for(int i=0;i<n;i++)
+	cin>>a[i];
+	cout<<noOfRotation(a,n);
+}
+
+
+___________________________________________________________________________________________________________________________________________________________________________________
+                                                        Find an Element in a Rotated Sorted Array
+___________________________________________________________________________________________________________________________________________________________________________________
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int BinarySearch(int a[],int start,int end,int k)
+{
+	while(start<=end)
+	{
+		int mid=start+(end-start)/2;
+		if(a[mid]==k)
+		return mid;
+		
+		if(a[mid]<k)
+		start=mid+1;
+		else
+		end=mid-1;
+	}
+	return -1;
+}
+int noOfRotation(int a[],int n)
+{
+	int start=0;
+	int end=n-1;
+	while(start<=end)
+	{
+		if(a[start]<a[end])
+		return start;
+		
+		int mid=start+(end-start)/2;
+		int prev=(mid+n-1)%n;
+		int next=(mid+1)%n;
+		if(a[mid]<a[prev] && a[mid]<a[next])
+		return mid;
+		if(a[mid]<a[end])
+		end=mid-1;
+		else
+		start=mid+1;
+	}
+	return -1;
+}
+int main()
+{
+	int n;
+	cin>>n;
+	int a[n];
+	for(int i=0;i<n;i++)
+	cin>>a[i];
+	int k;
+	cin>>k;
+	int mid=noOfRotation(a,n);
+	int index1=BinarySearch(a,0,mid-1,k);
+	int index2=BinarySearch(a,mid,n,k);
+	if(index1==-1 && index2==-1)
+	cout<<"Element not present"<<endl;
+	else if(index1==-1)
+	cout<<"Element "<<k<<" is found at "<<index2<<endl;
+	else
+	cout<<"Element "<<k<<" is found at "<<index1<<endl;
+}
+
+___________________________________________________________________________________________________________________________________________________________________________________
+                                                        Searching in a Nearly Sorted Array
+		(An element that is supposed to be at ith position, it may actually present at (i-1)th postion or at ith position or at (i+1)th position)
+___________________________________________________________________________________________________________________________________________________________________________________
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int BinarySearchInNearlySortedArray(int a[],int start,int end,int k)
+{
+	while(start<=end)
+	{
+		int mid=start+(end-start)/2;
+		if(a[mid]==k)
+		return mid;
+		
+		if(mid+1<=end && a[mid+1]==k)
+		return mid+1;
+		
+		if(mid-1>=start && a[mid-1==k])
+		return mid-1;
+		
+		if(a[mid]<k)
+		start=mid+2;
+		else
+		end=mid-2;
+	}
+	return -1;
+}
+int main()
+{
+	int n;
+	cin>>n;
+	int a[n];
+	for(int i=0;i<n;i++)
+	cin>>a[i];
+	int k;
+	cin>>k;
+	cout<<BinarySearchInNearlySortedArray(a,0,n-1,k);
+}
+
+
+___________________________________________________________________________________________________________________________________________________________________________________
+                                                        Find Floor of an element in a Sorted Array
+						       (Largest Element Smaller than or equal to given element)
+___________________________________________________________________________________________________________________________________________________________________________________
+#include<bits/stdc++.h>
+using namespace std;
+
+int floorOfAnElementInASortedArray(int a[],int start,int end,int k)
+{
+	int res=0;
+	while(start<=end)
+	{
+		int mid=start+(end-start)/2;
+		if(a[mid]<=k)
+		{
+			res=a[mid];
+			start=mid+1;
+		}
+		
+		if(a[mid]<k)
+		start=mid+1;
+		else
+		end=mid-1;
+	}
+	return res;
+}
+int main()
+{
+	int n;
+	cin>>n;
+	int a[n];
+	for(int i=0;i<n;i++)
+	cin>>a[i];
+	int k;
+	cin>>k;
+	cout<<floorOfAnElementInASortedArray(a,0,n-1,k);
+}
+
+
+___________________________________________________________________________________________________________________________________________________________________________________
+                                                        Ceil of an element in a Sorted Array
+					     (Smallest element greater than or equal to given element)
+___________________________________________________________________________________________________________________________________________________________________________________
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int ceilOfAnElementInASortedArray(int a[],int start,int end,int k)
+{
+	int res=0;
+	while(start<=end)
+	{
+		int mid=start+(end-start)/2;
+		if(a[mid]>=k)
+		{
+			res=a[mid];
+			end=mid-1;
+		}
+		
+		if(a[mid]<k)
+		start=mid+1;
+		else
+		end=mid-1;
+	}
+	return res;
+}
+int main()
+{
+	int n;
+	cin>>n;
+	int a[n];
+	for(int i=0;i<n;i++)
+	cin>>a[i];
+	int k;
+	cin>>k;
+	cout<<ceilOfAnElementInASortedArray(a,0,n-1,k);
+}
+
+___________________________________________________________________________________________________________________________________________________________________________________
+                                                        Next Alphabetical Element
+___________________________________________________________________________________________________________________________________________________________________________________
+
