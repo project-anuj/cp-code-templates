@@ -158,6 +158,106 @@ int main()
 }
 
 ______________________________________________________________________________
-		 Rabin - Karp String matching algorithm
+		 Rabin - Karp String matching algorithm O(m+n)
 ______________________________________________________________________________
+#include<bits/stdc++.h>
+using namespace std;
+#define lli long long int
+#define mod 1000000007
 
+lli dp[1000001];
+lli power[1000001];
+
+void init(string text)
+{
+	lli p=31;
+	lli p_power=1;
+	power[0]=1;
+	dp[0]=text[0]-'a'+1;
+	
+	for(int i=1;i<text.length();i++)
+	{
+		char ch = text[i];
+		p_power = (p_power*p)%mod;
+		dp[i]=(dp[i-1]+(ch-'a'+1)*p_power)%mod;
+		power[i]=p_power;
+	}
+}
+lli getHash(string key)
+{
+	lli value = 0;
+	lli p = 31;
+	lli p_power =1;
+	for(int i=0;i<key.size();i++)
+	{
+		value = (value + (key[i]-'a'+1)*p_power)%mod;
+		p_power = (p_power * p)%mod;
+	}
+	return value;
+}
+int main()
+{
+	int Lt,Lp;
+	string text,pat;
+	getline(cin,text);
+	getline(cin,pat);
+	init(text);
+	
+	Lt = text.length();
+	Lp = pat.length();
+	lli patHash= getHash(pat);
+	for(int L=0,R=L+Lp-1;R<Lt;L++,R++)
+	{
+		lli subHash = L==0? dp[R] : dp[R]-dp[L-1];
+		if((patHash*power[L])%mod==subHash)
+		{
+		 cout<<L;
+		 cout<<endl;
+		}		
+	}
+}
+
+______________________________________________________________________________
+		 No of different substrings in a string  O(n*n log(n))
+______________________________________________________________________________
+#include<bits/stdc++.h>
+using namespace std;
+#define mod 1000000007
+#define lli long long int
+
+lli dp[1000001];
+lli power[1000001];
+
+lli init(string s)
+{
+	lli p=31;
+	int n=s.length();
+	
+	power[0]=1;
+	for(int i=1;i<n;i++)
+	power[i] = (power[i-1]*p)%mod;
+	
+	dp[0]=0;
+	for(int i=0;i<n;i++)
+	dp[i+1]=(dp[i]+(s[i]-'a'+1)*power[i])%mod;
+	
+	int cnt=0;
+	for(int l=1;l<=n;l++)
+	{
+		set<lli> hs;
+		for(int i=0;i<=n-l;i++)
+		{
+			lli cur_h = (dp[i+l]-dp[i]+mod)%mod;
+			cur_h = (cur_h*power[n-i-1])%mod;
+			hs.insert(cur_h);
+		}
+		cnt+=hs.size();
+	}
+	return cnt;
+}
+int main()
+{
+	string s;
+	cin>>s;
+	cout<<"The no of different substrings in a string = "<<init(s);
+}
